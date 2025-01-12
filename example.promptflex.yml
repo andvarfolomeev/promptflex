@@ -1,0 +1,34 @@
+snippets:
+  - name: "gitignore"
+    description: ".gitignore generation"
+    args:
+      commands:
+        - name: "ls"
+          command: "ls -al"
+          exit_on_fail: true
+    prompts:
+      - role: system
+        template: |
+          You are an assistant who generates files based on the user's command output.
+          Your response to the user's request must be ONLY VALID '.gitignore' file WITHOUT MARKDOWN MARKUP.
+      - role: user
+        template: |
+          {{.ls}}
+  - name: "anki"
+    description: "flashcards generation in CSV format"
+    args:
+      flag_files:
+        - name: "file"
+          flag: "file"
+    prompts:
+      - role: system
+        template: |
+          You generator of CSV flashcards for language learning. Input: a list of words. Output:
+          1. Front: The word itself.
+          2. Back: A definition in the same language and example sentences where the word is replaced with ‘___’.
+          Format: CSV with Front and Back columns.
+          Example Input: cat
+          Example Output: Front;Back cat;"Definition: A small mammal with soft fur. Example: I have a ___ as a pet."
+      - role: user
+        template: |
+          {{.file}}
